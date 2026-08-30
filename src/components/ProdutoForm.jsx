@@ -1,83 +1,45 @@
 import React, { useState } from 'react';
-import './ProdutoForm.css';
 
-const ProdutoForm = ({ onAddProduto }) => {
+const ProdutoForm = ({ adicionarProduto }) => {
   const [nome, setNome] = useState('');
   const [preco, setPreco] = useState('');
   const [descricao, setDescricao] = useState('');
-  const [imagem, setImagem] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!nome || !preco || !descricao) {
-      alert('Por favor, preencha os campos obrigatórios (Nome, Preço, Descrição).');
-      return;
-    }
-
+    
     const novoProduto = {
       id: Date.now(),
-      nome,
-      preco: parseFloat(preco),
-      descricao,
-      imagem
+      nome: nome,
+      preco: preco,
+      descricao: descricao,
+      imagem: 'https://via.placeholder.com/100'
     };
-
-    onAddProduto(novoProduto);
-
+    
+    adicionarProduto(novoProduto);
+    
+    // Limpar o formulário
     setNome('');
     setPreco('');
     setDescricao('');
-    setImagem('');
   };
 
   return (
-    <form className="produto-form" onSubmit={handleSubmit}>
-      <h2>Adicionar Novo Produto</h2>
-      
-      <div className="form-group">
-        <label>Nome do Produto *</label>
-        <input 
-          type="text" 
-          value={nome} 
-          onChange={(e) => setNome(e.target.value)} 
-          required 
-          placeholder="Ex: Teclado Mecânico"
-        />
+    <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+      <h3>Cadastrar Produto</h3>
+      <div>
+        <label>Nome: </label>
+        <input value={nome} onChange={(e) => setNome(e.target.value)} required />
       </div>
-
-      <div className="form-group">
-        <label>Preço *</label>
-        <input 
-          type="number" 
-          step="0.01"
-          value={preco} 
-          onChange={(e) => setPreco(e.target.value)} 
-          required 
-          placeholder="Ex: 150.00"
-        />
+      <div>
+        <label>Preço: </label>
+        <input type="number" step="0.01" value={preco} onChange={(e) => setPreco(e.target.value)} required />
       </div>
-
-      <div className="form-group">
-        <label>Descrição *</label>
-        <textarea 
-          value={descricao} 
-          onChange={(e) => setDescricao(e.target.value)} 
-          required 
-          placeholder="Breve descrição do produto"
-        />
+      <div>
+        <label>Descrição: </label>
+        <input value={descricao} onChange={(e) => setDescricao(e.target.value)} required />
       </div>
-
-      <div className="form-group">
-        <label>URL da Imagem</label>
-        <input 
-          type="text" 
-          value={imagem} 
-          onChange={(e) => setImagem(e.target.value)} 
-          placeholder="URL de uma imagem (opcional)"
-        />
-      </div>
-
-      <button type="submit">Cadastrar Produto</button>
+      <button type="submit" style={{ marginTop: '10px' }}>Salvar Produto</button>
     </form>
   );
 };

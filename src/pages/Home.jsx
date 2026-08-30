@@ -1,71 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import ProdutoCard from '../components/ProdutoCard';
 import ProdutoForm from '../components/ProdutoForm';
-import './Home.css';
 
 const Home = () => {
   const [produtos, setProdutos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
-    // Simula uma chamada à API com um atraso de 2 segundos
-    const mockProdutos = [
-      {
-        id: 1,
-        nome: "Monitor 24' Full HD",
-        preco: 800.50,
-        descricao: "Monitor LED com ótima qualidade de imagem para jogos e trabalho.",
-        imagem: "https://via.placeholder.com/150/0000FF/808080?text=Monitor"
-      },
-      {
-        id: 2,
-        nome: "Mouse Gamer",
-        preco: 120.00,
-        descricao: "Mouse ergonômico com 6 botões configuráveis.",
-        imagem: "https://via.placeholder.com/150/FF0000/FFFFFF?text=Mouse"
-      }
-    ];
-
-    const timer = setTimeout(() => {
-      setProdutos(mockProdutos);
-      setLoading(false);
+    // Simulando uma API com dados fictícios
+    setTimeout(() => {
+      setProdutos([
+        {
+          id: 1,
+          nome: 'Caderno',
+          preco: '15.00',
+          descricao: 'Caderno de 10 matérias',
+          imagem: 'https://via.placeholder.com/100'
+        },
+        {
+          id: 2,
+          nome: 'Caneta',
+          preco: '2.50',
+          descricao: 'Caneta azul',
+          imagem: 'https://via.placeholder.com/100'
+        }
+      ]);
+      setCarregando(false);
     }, 2000);
-
-    // Cleanup function
-    return () => clearTimeout(timer);
   }, []);
 
-  const handleAddProduto = (novoProduto) => {
+  const adicionarProduto = (novoProduto) => {
     setProdutos([...produtos, novoProduto]);
   };
 
   return (
-    <div className="home-container">
+    <div style={{ padding: '20px' }}>
       <h1>Catálogo de Produtos</h1>
       
-      <ProdutoForm onAddProduto={handleAddProduto} />
+      <ProdutoForm adicionarProduto={adicionarProduto} />
 
-      <div className="produtos-section">
-        <h2>Produtos Cadastrados</h2>
-        
-        {loading ? (
-          <p className="loading-message">Carregando produtos...</p>
-        ) : produtos.length > 0 ? (
-          <div className="produtos-lista">
-            {produtos.map((produto) => (
-              <ProdutoCard
-                key={produto.id}
-                nome={produto.nome}
-                preco={produto.preco}
-                descricao={produto.descricao}
-                imagem={produto.imagem}
-              />
-            ))}
-          </div>
-        ) : (
-          <p className="empty-message">Nenhum produto cadastrado no catálogo.</p>
-        )}
-      </div>
+      <hr />
+
+      <h2>Lista de Produtos</h2>
+      
+      {carregando ? (
+        <p>carregando...</p>
+      ) : (
+        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {produtos.map((produto) => (
+            <ProdutoCard
+              key={produto.id}
+              nome={produto.nome}
+              preco={produto.preco}
+              descricao={produto.descricao}
+              imagem={produto.imagem}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
