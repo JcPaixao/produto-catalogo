@@ -1,0 +1,35 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.home-container h1 {
+  text-align: center;
+  color: #333;
+}
+
+.produtos-section {
+  margin-top: 40px;
+}
+
+.produtos-section h2 {
+  text-align: center;
+  color: #444;
+  margin-bottom: 20px;
+}
+
+.produtos-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.loading-message, .empty-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #777;
+  font-style: italic;
+}
